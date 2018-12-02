@@ -51,12 +51,16 @@ void coppy(l_stack::node * is, l_stack::node *& to)
 	coppy(is->next, to->next);
 }
 
-void delete_list(l_stack::node * is)
+void delete_list(l_stack::node *& is)
 {
-	if (!is) return;
-	delete_list(is->next);
-	delete is;
-	is = nullptr;
+	l_stack::node *tmp;
+	while (is!=nullptr) 
+	{
+		tmp = is->next;
+		delete is;
+		is = tmp;
+	}
+	
 }
 
 void edd_list(l_stack::node *& is, const l_stack::datatype & x)
@@ -69,16 +73,10 @@ void edd_list(l_stack::node *& is, const l_stack::datatype & x)
 		is = p;
 		return;
 	}
-	l_stack::node *tmp_list = is;
-	while (is->next!=nullptr)
-		is=is->next;
 	l_stack::node *p = new l_stack::node;
 	p->data = x;
-	p->next = nullptr;
-	is->next= p;
-	is = tmp_list;
-	
-
+	p->next = is;
+	is = p;
 
 }
 
@@ -128,18 +126,12 @@ void l_stack::push(const datatype & x)
 
 void l_stack::pop()
 {
-	node *tmp = begin;
-	if (tmp->next == nullptr)
-	{
-		delete begin;
-		begin = nullptr;
-		return;
-	}
-		
-	while (tmp->next->next!=nullptr) tmp = tmp->next;
+
+	node *tmp = begin->next;
 	
-	delete tmp->next;
-	tmp->next= nullptr;
+	delete begin;
+	begin = nullptr;
+	begin = tmp;
 	
 }
 

@@ -57,7 +57,7 @@ class l_stack : public stack
     node *begin;
 
 	friend void coppy(l_stack::node *is, l_stack:: node *&to);
-	friend void delete_list(l_stack::node *is);
+	friend void delete_list(l_stack::node *&is);
 	friend void edd_list(l_stack::node *&is, const l_stack::datatype & x);
 
 public:
